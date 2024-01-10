@@ -67,25 +67,25 @@ def print_tree(node, level):
         print("     "*level, node.answer) 
         return
     print("       "*level, node.attribute) 
-    for value, n in node.children:
-        print("     "*(level+1), value) 
-        print_tree(n, level + 2)
+    for i,j in node.children:
+        print("     "*(level+1), i) 
+        print_tree(j, level + 2)
 
 def classify(node,x_test,head): 
     if node.answer != "":
         print(node.answer) 
         return
     pos = head.index(node.attribute)
-    for value, n in node.children:
-        if x_test[pos]==value: 
-            classify(n,x_test,head)
+    for i,j in node.children:
+        if x_test[pos] == i: 
+            classify(j,x_test,head)
             
 data, head = load_csv("dat3.csv")
 node = build_tree(data, head)
 print("The decision tree for the dataset using ID3 algorithm is ") 
 print_tree(node, 0)
 data, head = load_csv("data3test.csv") 
-for i in data:
-    print("The test instance : ",i) 
+for x_test in data:
+    print("The test instance : ",x_test) 
     print("The predicted label : ", end="") 
-    classify(node,i,head)
+    classify(node,x_test,head)
